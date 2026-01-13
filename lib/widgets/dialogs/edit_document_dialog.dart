@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../models/car.dart';
-import '../../constants/app_colors.dart';
+import 'start_date_picker_field.dart';
+import 'validity_days_field.dart';
+import 'expiry_date_preview.dart';
+import 'car_updater.dart';
 
 class EditDocumentDialog extends StatefulWidget {
   final Car car;
@@ -51,71 +54,28 @@ class _EditDocumentDialogState extends State<EditDocumentDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              readOnly: true,
+            StartDatePickerField(
               controller: startDateController,
-              decoration: InputDecoration(
-                labelText: 'Start Date (Valid From)',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: selectedDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        selectedDate = picked;
-                        startDateController.text =
-                            '${picked.day}/${picked.month}/${picked.year}';
-                      });
-                    }
-                  },
-                ),
-              ),
+              selectedDate: selectedDate,
+              onDateChanged: (newDate) {
+                setState(() {
+                  selectedDate = newDate;
+                  startDateController.text =
+                      '${newDate.day}/${newDate.month}/${newDate.year}';
+                });
+              },
             ),
             const SizedBox(height: 16),
-            TextField(
+            ValidityDaysField(
               controller: daysValidController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Valid For (days)',
-                hintText: '365',
-                suffixText: 'days',
-              ),
-              onChanged: (value) {
+              onChanged: (_) {
                 setState(() {});
               },
             ),
             const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.lightPurple,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Expiry Date (Auto-calculated):',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${selectedDate.add(Duration(days: int.tryParse(daysValidController.text) ?? 365)).day}/'
-                    '${selectedDate.add(Duration(days: int.tryParse(daysValidController.text) ?? 365)).month}/'
-                    '${selectedDate.add(Duration(days: int.tryParse(daysValidController.text) ?? 365)).year}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryPurple,
-                    ),
-                  ),
-                ],
-              ),
+            ExpiryDatePreview(
+              selectedDate: selectedDate,
+              daysText: daysValidController.text,
             ),
           ],
         ),
@@ -129,37 +89,11 @@ class _EditDocumentDialogState extends State<EditDocumentDialog> {
           onPressed: () {
             final daysValid = int.tryParse(daysValidController.text) ?? 365;
             final expiryDate = selectedDate.add(Duration(days: daysValid));
-
-            Car updatedCar;
-            if (widget.docType == 'Insurance') {
-              updatedCar = Car(
-                id: widget.car.id,
-                name: widget.car.name,
-                imagePath: widget.car.imagePath,
-                insuranceExpiry: expiryDate,
-                itpExpiry: widget.car.itpExpiry,
-                rovignetteExpiry: widget.car.rovignetteExpiry,
-              );
-            } else if (widget.docType == 'ITP') {
-              updatedCar = Car(
-                id: widget.car.id,
-                name: widget.car.name,
-                imagePath: widget.car.imagePath,
-                insuranceExpiry: widget.car.insuranceExpiry,
-                itpExpiry: expiryDate,
-                rovignetteExpiry: widget.car.rovignetteExpiry,
-              );
-            } else {
-              // Vignette
-              updatedCar = Car(
-                id: widget.car.id,
-                name: widget.car.name,
-                imagePath: widget.car.imagePath,
-                insuranceExpiry: widget.car.insuranceExpiry,
-                itpExpiry: widget.car.itpExpiry,
-                rovignetteExpiry: expiryDate,
-              );
-            }
+            final updatedCar = CarUpdater.updateDocumentExpiry(
+              car: widget.car,
+              docType: widget.docType,
+              expiryDate: expiryDate,
+            );
 
             widget.onSave(updatedCar);
             Navigator.pop(context);
