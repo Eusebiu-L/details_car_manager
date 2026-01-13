@@ -33,11 +33,22 @@ lib/
 ├── 🧮 utils/
 │   └── date_utils.dart       # Helper-e pentru calcule de date
 ├── 🧩 widgets/               # Componente reutilizabile
-│   ├── cars_list_view.dart
+│   ├── cars_list_view.dart   # Widget listă mașini
 │   ├── dialogs/
+│   │   ├── edit_document_dialog.dart        # Dialog principal editare
+│   │   ├── start_date_picker_field.dart     # Date picker field
+│   │   ├── validity_days_field.dart         # Zile validitate input
+│   │   ├── expiry_date_preview.dart         # Preview dată expirare
+│   │   └── car_updater.dart                 # Logică actualizare car
 │   ├── tiles/
+│   │   ├── reminder_tile.dart
+│   │   └── car_summary_item.dart
 │   └── sections/
+│       └── expiring_warning_section.dart
 └── 🖼️ screens/               # Ecranele principale
+    ├── home_screen.dart
+    └── car_details_screen.dart
+```
     ├── home_screen.dart
     └── car_details_screen.dart
 ```
