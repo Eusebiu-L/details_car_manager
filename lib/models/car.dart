@@ -9,9 +9,6 @@ class Car {
   /// Car's name/model (e.g., 'Toyota Corolla')
   final String name;
   
-  /// Path to the car's image asset
-  final String imagePath;
-  
   /// Car insurance expiry date
   final DateTime insuranceExpiry;
   
@@ -24,7 +21,6 @@ class Car {
   Car({
     required this.id,
     required this.name,
-    required this.imagePath,
     required this.insuranceExpiry,
     required this.itpExpiry,
     required this.rovignetteExpiry,

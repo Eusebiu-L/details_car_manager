@@ -13,7 +13,6 @@ class CarService {
       Car(
         id: '1',
         name: 'Toyota Corolla',
-        imagePath: 'assets/images/car1.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 45)),
         itpExpiry: DateTime.now().subtract(const Duration(days: 5)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 45)),
@@ -21,7 +20,6 @@ class CarService {
       Car(
         id: '2',
         name: 'BMW X5',
-        imagePath: 'assets/images/car2.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 7)),
         itpExpiry: DateTime.now().add(const Duration(days: 300)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 150)),
@@ -29,7 +27,6 @@ class CarService {
       Car(
         id: '3',
         name: 'Audi A4',
-        imagePath: 'assets/images/car3.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 45)),
         itpExpiry: DateTime.now().add(const Duration(days: 60)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 90)),
@@ -37,7 +34,6 @@ class CarService {
       Car(
         id: '4',
         name: 'Volkswagen Golf',
-        imagePath: 'assets/images/car4.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 80)),
         itpExpiry: DateTime.now().add(const Duration(days: 60)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 200)),
@@ -45,7 +41,6 @@ class CarService {
       Car(
         id: '5',
         name: 'Land Rover Freelander',
-        imagePath: 'assets/images/car5.png',
         insuranceExpiry: DateTime.now().subtract(const Duration(days: 10)),
         itpExpiry: DateTime.now().add(const Duration(days: 120)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 90)),
@@ -53,7 +48,6 @@ class CarService {
       Car(
         id: '6',
         name: 'BMW M6',
-        imagePath: 'assets/images/car6.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 200)),
         itpExpiry: DateTime.now().add(const Duration(days: 150)),
         rovignetteExpiry: DateTime.now().subtract(const Duration(days: 30)),
@@ -61,7 +55,6 @@ class CarService {
       Car(
         id: '7',
         name: 'Nissan Patrol Y61',
-        imagePath: 'assets/images/car7.png',
         insuranceExpiry: DateTime.now().add(const Duration(days: 250)),
         itpExpiry: DateTime.now().subtract(const Duration(days: 15)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 180)),

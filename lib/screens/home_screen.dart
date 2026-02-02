@@ -190,7 +190,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 final newCar = Car(
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   name: nameController.text,
-                  imagePath: 'assets/images/car1.png',
                   // Set all expiry dates to 365 days from now
                   insuranceExpiry: DateTime.now().add(const Duration(days: 365)),
                   itpExpiry: DateTime.now().add(const Duration(days: 365)),

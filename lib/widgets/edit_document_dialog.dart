@@ -134,7 +134,6 @@ class _EditDocumentDialogState extends State<EditDocumentDialog> {
               updatedCar = Car(
                 id: widget.car.id,
                 name: widget.car.name,
-                imagePath: widget.car.imagePath,
                 insuranceExpiry: expiryDate,
                 itpExpiry: widget.car.itpExpiry,
                 rovignetteExpiry: widget.car.rovignetteExpiry,
@@ -143,7 +142,6 @@ class _EditDocumentDialogState extends State<EditDocumentDialog> {
               updatedCar = Car(
                 id: widget.car.id,
                 name: widget.car.name,
-                imagePath: widget.car.imagePath,
                 insuranceExpiry: widget.car.insuranceExpiry,
                 itpExpiry: expiryDate,
                 rovignetteExpiry: widget.car.rovignetteExpiry,
@@ -153,7 +151,6 @@ class _EditDocumentDialogState extends State<EditDocumentDialog> {
               updatedCar = Car(
                 id: widget.car.id,
                 name: widget.car.name,
-                imagePath: widget.car.imagePath,
                 insuranceExpiry: widget.car.insuranceExpiry,
                 itpExpiry: widget.car.itpExpiry,
                 rovignetteExpiry: expiryDate,
