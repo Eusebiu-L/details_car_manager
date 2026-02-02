@@ -3,6 +3,7 @@ import '../models/car.dart';
 import '../services/car_service.dart';
 import '../widgets/cars_list_view.dart';
 import '../widgets/sections/expiring_warning_section.dart';
+import '../widgets/filter_bar.dart';
 import '../constants/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Car> cars;
+  FilterType selectedFilter = FilterType.all;
+  bool showFilters = false;
 
   @override
   void initState() {
@@ -26,6 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
   List<MapEntry<Car, String>> get docsExpiringIn7Days =>
       CarService.getDocsExpiringIn7Days(cars);
 
+  List<Car> get filteredCars {
+    switch (selectedFilter) {
+      case FilterType.expiredVignette:
+        return CarService.getExpiredRovignetteCars(cars);
+      case FilterType.expiredItp:
+        return CarService.getExpiredItpCars(cars);
+      case FilterType.expiredInsurance:
+        return CarService.getExpiredInsuranceCars(cars);
+      default:
+        return cars;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +53,36 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                setState(() {
+                  showFilters = !showFilters;
+                });
+              },
+              icon: Icon(showFilters ? Icons.expand_less : Icons.expand_more),
+              label: Text(showFilters ? 'Hide Filters' : 'Show Filters'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryPurple,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(double.infinity, 48),
+              ),
+            ),
+          ),
+          if (showFilters)
+            FilterBar(
+              selectedFilter: selectedFilter,
+              onFilterChanged: (newFilter) {
+                setState(() {
+                  selectedFilter = newFilter;
+                });
+              },
+            ),
           ExpiringWarningSection(expiringDocs: docsExpiringIn7Days),
           Expanded(
             child: CarsListView(
-              cars: cars,
+              cars: filteredCars,
               onCarUpdated: (updatedCar) {
                 setState(() {
                   final index = cars.indexWhere((c) => c.id == updatedCar.id);
@@ -110,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: nameController,
                 decoration: const InputDecoration(
                   labelText: 'Car Name',
-                  hintText: 'e.g., Toyota Corolla',
+                  hintText: 'e.g., Toyota',
                 ),
               ),
             ],

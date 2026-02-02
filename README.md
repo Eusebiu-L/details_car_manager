@@ -29,11 +29,13 @@ lib/
 ├── 💾 services/
 │   └── car_service.dart      # Business logic și date inițiale
 ├── 🎨 constants/
-│   └── app_colors.dart       # Paletă centralizată de culori
+│   ├── app_colors.dart       # Paletă centralizată de culori
+│   └── app_strings.dart      # Text-uri UI centralizate
 ├── 🧮 utils/
 │   └── date_utils.dart       # Helper-e pentru calcule de date
 ├── 🧩 widgets/               # Componente reutilizabile
 │   ├── cars_list_view.dart   # Widget listă mașini
+│   ├── filter_bar.dart       # Widget filtre documente
 │   ├── dialogs/
 │   │   ├── edit_document_dialog.dart        # Dialog principal editare
 │   │   ├── start_date_picker_field.dart     # Date picker field
@@ -46,9 +48,6 @@ lib/
 │   └── sections/
 │       └── expiring_warning_section.dart
 └── 🖼️ screens/               # Ecranele principale
-    ├── home_screen.dart
-    └── car_details_screen.dart
-```
     ├── home_screen.dart
     └── car_details_screen.dart
 ```
@@ -71,19 +70,35 @@ lib/
 
 ## 📋 Documente Monitorizate
 
-Aplicația vine pre-configurată cu **4 vehicule de test**:
+Aplicația vine pre-configurată cu **7 vehicule de test** cu stări diferite:
 
-| # | Vehicul | Status Inițial | Documente | 
-|---|---------|---|---|
-| 1. | Toyota | 🔴 Expirat | ITP expirat |
+| # | Vehicul | Status | Documente |
+|---|---------|--------|-----------|
+| 1. | Toyota Corolla | 🔴 Expirat | ITP expirat (-5 zile) |
 | 2. | BMW X5 | 🟡 Warning | Asigurare în 7 zile |
-| 3. | Audi | 🟢 Valid | Toate în regulă |
-| 4. | Golf | 🟢 Valid | Toate în regulă |
+| 3. | Audi A4 | 🟢 Valid | Toate în regulă |
+| 4. | VW Golf | 🟢 Valid | Toate în regulă |
+| 5. | Land Rover Freelander | 🔴 Expirat | Asigurare expirat (-10 zile) |
+| 6. | BMW M6 | 🔴 Expirat | Rovigneta expirat (-30 zile) |
+| 7. | Nissan Patrol Y61 | 🔴 Expirat | ITP expirat (-15 zile) |
 
 Fiecare vehicul monitorizează:
 - **Asigurare RCA/CASCO** - Anuală
 - **ITP (Inspecția Tehnică)** - 1-2 ani
 - **Rovinietă** - Anuală
+
+---
+
+## 🔍 Sistem de Filtrare
+
+Aplicația include un sistem de filtre inteligent care permite filtrarea rapidă a mașinilor după documente expirate:
+
+- **All**: Afișează toate vehiculele
+- **Expired Vignette**: Doar mașini cu rovigneta expirat
+- **Expired ITP**: Doar mașini cu ITP expirat
+- **Expired Insurance**: Doar mașini cu asigurare expirat
+
+Filtrele se activează printr-un buton **"Filtrează"** care se deschide/închide pe cerere.
 
 ---
 
@@ -124,7 +139,7 @@ flutter run
 
 | Ecran Principal | Detalii Mașină | Editare Document |
 |---|---|---|
-| ![Home Screen](lib/screenshots/Home_screen.png) | ![Car Details](lib/screenshots/car_details.png) | ![Edit](lib/screenshots/edit_car_details.png) |
-| Lista mașini cu status | Documente vehicul | Selectare dată expirare |
+| ![Home Screen](assets/screenshots/Home_screen.png) | ![Car Details](assets/screenshots/car_details.png) | ![Edit](assets/screenshots/edit_car_details.png) |
+| Lista mașini cu sistem de filtrare | Documente vehicul | Selectare dată expirare |
 
 ---

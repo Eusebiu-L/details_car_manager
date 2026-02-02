@@ -35,6 +35,30 @@ class CarService {
         itpExpiry: DateTime.now().add(const Duration(days: 60)),
         rovignetteExpiry: DateTime.now().add(const Duration(days: 200)),
       ),
+      Car(
+        id: '5',
+        name: 'Land Rover Freelander',
+        imagePath: 'assets/images/car5.png',
+        insuranceExpiry: DateTime.now().subtract(const Duration(days: 10)),
+        itpExpiry: DateTime.now().add(const Duration(days: 120)),
+        rovignetteExpiry: DateTime.now().add(const Duration(days: 90)),
+      ),
+      Car(
+        id: '6',
+        name: 'BMW M6',
+        imagePath: 'assets/images/car6.png',
+        insuranceExpiry: DateTime.now().add(const Duration(days: 200)),
+        itpExpiry: DateTime.now().add(const Duration(days: 150)),
+        rovignetteExpiry: DateTime.now().subtract(const Duration(days: 30)),
+      ),
+      Car(
+        id: '7',
+        name: 'Nissan Patrol Y61',
+        imagePath: 'assets/images/car7.png',
+        insuranceExpiry: DateTime.now().add(const Duration(days: 250)),
+        itpExpiry: DateTime.now().subtract(const Duration(days: 15)),
+        rovignetteExpiry: DateTime.now().add(const Duration(days: 180)),
+      ),
     ];
   }
 
@@ -74,5 +98,24 @@ class CarService {
     return car.insuranceExpiry.isBefore(now) ||
         car.itpExpiry.isBefore(now) ||
         car.rovignetteExpiry.isBefore(now);
+  }
+
+  static List<Car> getExpiredRovignetteCars(List<Car> cars) {
+    final now = DateTime.now();
+    return cars.where((car) => car.rovignetteExpiry.isBefore(now)).toList();
+  }
+
+  static List<Car> getExpiredItpCars(List<Car> cars) {
+    final now = DateTime.now();
+    return cars.where((car) => car.itpExpiry.isBefore(now)).toList();
+  }
+
+  static List<Car> getExpiredInsuranceCars(List<Car> cars) {
+    final now = DateTime.now();
+    return cars.where((car) => car.insuranceExpiry.isBefore(now)).toList();
+  }
+
+  static List<Car> getAnyExpiredDocsCars(List<Car> cars) {
+    return cars.where((car) => hasExpiredDocs(car)).toList();
   }
 }

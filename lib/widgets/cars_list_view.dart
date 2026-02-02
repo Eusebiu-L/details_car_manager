@@ -19,7 +19,12 @@ class CarsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(
+        top: 8.0,
+        left: 8.0,
+        right: 8.0,
+        bottom: 80.0,
+      ),
       itemCount: cars.length,
       itemBuilder: (context, index) {
         final car = cars[index];
