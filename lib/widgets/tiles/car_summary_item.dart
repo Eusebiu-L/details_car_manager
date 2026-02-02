@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/app_colors.dart';
+import '../../common/app_colors.dart';
 import '../../utils/date_utils.dart' as date_helper;
 
 /// Compact summary item showing a document with its expiry date and status.

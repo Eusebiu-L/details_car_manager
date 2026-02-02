@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
-import '../constants/app_strings.dart';
+import '../common/app_colors.dart';
+import '../common/app_strings.dart';
 
 /// Enum for available filter types in the application.
 enum FilterType {

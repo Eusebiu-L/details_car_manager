@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/app_colors.dart';
+import '../../common/app_colors.dart';
 
 /// Preview widget showing the calculated expiry date.
 /// 

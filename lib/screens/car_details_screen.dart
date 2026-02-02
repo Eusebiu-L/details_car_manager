@@ -3,7 +3,7 @@ import '../models/car.dart';
 import '../widgets/tiles/reminder_tile.dart';
 import '../widgets/tiles/car_summary_item.dart';
 import '../widgets/dialogs/edit_document_dialog.dart';
-import '../constants/app_colors.dart';
+import '../common/app_colors.dart';
 
 /// Detailed view screen for a single car.
 /// 

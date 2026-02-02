@@ -4,7 +4,7 @@ import '../services/car_service.dart';
 import '../widgets/cars_list_view.dart';
 import '../widgets/sections/expiring_warning_section.dart';
 import '../widgets/filter_bar.dart';
-import '../constants/app_colors.dart';
+import '../common/app_colors.dart';
 
 /// Main home screen widget - entry point for the car management interface.
 /// 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/car.dart';
-import '../../constants/app_colors.dart';
+import '../../common/app_colors.dart';
 
 /// Warning section widget displaying documents expiring within 7 days.
 /// 
