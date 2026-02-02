@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/car.dart';
 import '../services/car_service.dart';
 import '../screens/car_details_screen.dart';
-import '../constants/app_colors.dart';
+import '../common/app_colors.dart';
 
 /// List view widget displaying all cars as card items.
 /// 
