@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_strings.dart';
 
+/// Enum for available filter types in the application.
 enum FilterType {
   all,
   expiredVignette,
@@ -9,8 +10,14 @@ enum FilterType {
   expiredInsurance,
 }
 
+/// Filter bar widget allowing users to filter cars by document expiry status.
+/// 
+/// Displays filter options as chips that users can tap to filter the car list.
 class FilterBar extends StatelessWidget {
+  /// Currently selected filter type
   final FilterType selectedFilter;
+  
+  /// Callback when filter selection changes
   final Function(FilterType) onFilterChanged;
 
   const FilterBar({
@@ -55,8 +62,13 @@ class FilterBar extends StatelessWidget {
 }
 
 class _FilterChip extends StatelessWidget {
+  /// Label text displayed on the chip
   final String label;
+  
+  /// Whether this filter chip is currently selected
   final bool isSelected;
+  
+  /// Callback when the chip is tapped
   final VoidCallback onTap;
 
   const _FilterChip({

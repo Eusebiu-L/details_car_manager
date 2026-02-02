@@ -91,7 +91,7 @@ class ExpiringWarningSection extends StatelessWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

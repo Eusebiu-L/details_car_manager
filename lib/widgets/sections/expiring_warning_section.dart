@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import '../../models/car.dart';
 import '../../constants/app_colors.dart';
 
+/// Warning section widget displaying documents expiring within 7 days.
+/// 
+/// Shows a prominent yellow warning banner with a list of cars and documents
+/// that will expire soon. Hidden if no documents are expiring.
 class ExpiringWarningSection extends StatelessWidget {
+  /// List of car-document pairs expiring in the next 7 days
   final List<MapEntry<Car, String>> expiringDocs;
 
   const ExpiringWarningSection({super.key, required this.expiringDocs});
 
   @override
   Widget build(BuildContext context) {
+    // Hide section if no documents are expiring
     if (expiringDocs.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -36,6 +42,7 @@ class ExpiringWarningSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+          // List each expiring document
           ...expiringDocs.map((entry) {
             final car = entry.key;
             final docType = entry.value;
@@ -49,6 +56,7 @@ class ExpiringWarningSection extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
+                    // Icon based on document type
                     Icon(
                       docType == 'Insurance'
                           ? Icons.shield
@@ -89,7 +97,7 @@ class ExpiringWarningSection extends StatelessWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

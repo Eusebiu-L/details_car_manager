@@ -6,6 +6,10 @@ import '../widgets/sections/expiring_warning_section.dart';
 import '../widgets/filter_bar.dart';
 import '../constants/app_colors.dart';
 
+/// Main home screen widget - entry point for the car management interface.
+/// 
+/// Displays a list of cars with filtering capabilities, shows warnings for
+/// expiring documents, and allows users to add or delete cars.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -14,21 +18,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  /// List of all cars in the application
   late List<Car> cars;
+  
+  /// Currently selected filter type
   FilterType selectedFilter = FilterType.all;
+  
+  /// Controls visibility of the filter bar
   bool showFilters = false;
 
   @override
   void initState() {
     super.initState();
+    // Initialize with mock data from CarService
     cars = CarService.getInitialCars();
   }
 
+  /// Returns count of cars with at least one expired document
   int get carsWithExpiredDocs => CarService.getExpiredDocsCount(cars);
 
+  /// Returns all documents expiring within 7 days
   List<MapEntry<Car, String>> get docsExpiringIn7Days =>
       CarService.getDocsExpiringIn7Days(cars);
 
+  /// Returns filtered list of cars based on selected filter type
   List<Car> get filteredCars {
     switch (selectedFilter) {
       case FilterType.expiredVignette:
@@ -57,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
               onPressed: () {
+                // Toggle filter visibility
                 setState(() {
                   showFilters = !showFilters;
                 });
@@ -92,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               onCarDeleted: (carToDelete) {
+                // Show confirmation dialog before deleting car
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -110,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             cars.removeWhere((c) => c.id == carToDelete.id);
                           });
                           Navigator.pop(context);
+                          // Show confirmation snackbar
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('${carToDelete.name} deleted'),
@@ -136,6 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// Shows a dialog for adding a new car to the list.
+  /// 
+  /// User can enter a car name and it creates a new car with default
+  /// expiry dates set to 365 days from now.
   void _showAddCarDialog() {
     final nameController = TextEditingController();
 
@@ -166,10 +186,12 @@ class _HomeScreenState extends State<HomeScreen> {
           TextButton(
             onPressed: () {
               if (nameController.text.isNotEmpty) {
+                // Create new car with default values
                 final newCar = Car(
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   name: nameController.text,
                   imagePath: 'assets/images/car1.png',
+                  // Set all expiry dates to 365 days from now
                   insuranceExpiry: DateTime.now().add(const Duration(days: 365)),
                   itpExpiry: DateTime.now().add(const Duration(days: 365)),
                   rovignetteExpiry: DateTime.now().add(const Duration(days: 365)),

@@ -4,9 +4,18 @@ import '../services/car_service.dart';
 import '../screens/car_details_screen.dart';
 import '../constants/app_colors.dart';
 
+/// List view widget displaying all cars as card items.
+/// 
+/// Shows car names with status indicators and provides callbacks for
+/// updating and deleting cars.
 class CarsListView extends StatelessWidget {
+  /// List of cars to display
   final List<Car> cars;
+  
+  /// Callback when a car is updated
   final Function(Car) onCarUpdated;
+  
+  /// Callback when a car is deleted
   final Function(Car) onCarDeleted;
 
   const CarsListView({
@@ -28,16 +37,19 @@ class CarsListView extends StatelessWidget {
       itemCount: cars.length,
       itemBuilder: (context, index) {
         final car = cars[index];
+        // Check if car has any expired documents
         final hasExpiredDocs = CarService.hasExpiredDocs(car);
 
         return GestureDetector(
           onTap: () {
+            // Navigate to car details screen
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => CarDetailsScreen(car: car),
               ),
             ).then((updatedCar) {
+              // Update car if it was modified in details screen
               if (updatedCar != null) {
                 onCarUpdated(updatedCar);
               }
@@ -78,6 +90,7 @@ class CarsListView extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                      // Show red background if documents are expired, green otherwise
                       color: hasExpiredDocs
                           ? AppColors.expiredRedBackground
                           : AppColors.validGreenBackground,
@@ -92,6 +105,7 @@ class CarsListView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
+                  // Delete button
                   IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {

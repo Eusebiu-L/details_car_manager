@@ -5,7 +5,12 @@ import '../widgets/tiles/car_summary_item.dart';
 import '../widgets/dialogs/edit_document_dialog.dart';
 import '../constants/app_colors.dart';
 
+/// Detailed view screen for a single car.
+/// 
+/// Displays all document information (Insurance, ITP, Vignette) with
+/// editable expiry dates. Shows both tile view and summary view of documents.
 class CarDetailsScreen extends StatefulWidget {
+  /// The car to display details for
   final Car car;
 
   const CarDetailsScreen({super.key, required this.car});
@@ -15,6 +20,7 @@ class CarDetailsScreen extends StatefulWidget {
 }
 
 class _CarDetailsScreenState extends State<CarDetailsScreen> {
+  /// Current car data (updated when documents are edited)
   late Car car;
 
   @override
@@ -159,6 +165,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
     );
   }
 
+  /// Shows edit dialog for a specific document type.
+  /// 
+  /// Allows user to update the expiry date for Insurance, ITP, or Vignette.
   void _editDocumentDate(String docType, DateTime currentDate) {
     showDialog(
       context: context,

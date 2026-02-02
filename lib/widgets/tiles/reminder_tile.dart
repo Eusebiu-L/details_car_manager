@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../utils/date_utils.dart' as date_helper;
 
+/// Tile widget displaying a car document reminder with status indicator.
+/// 
+/// Shows document title, expiry date, and visual status (valid/expiring/expired).
+/// Colors change based on document expiry status.
 class ReminderTile extends StatelessWidget {
+  /// Document title (e.g., 'Car Insurance')
   final String title;
+  
+  /// Date when the document expires
   final DateTime expiryDate;
+  
+  /// Icon to display for this document type
   final IconData icon;
 
   const ReminderTile({
@@ -19,12 +28,14 @@ class ReminderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine background color based on expiry status
     Color getBackgroundColor() {
       if (isExpired) return AppColors.expiredRedBackground;
       if (isExpiringSoon) return AppColors.warningYellowBackground;
       return AppColors.validGreenBackground;
     }
 
+    // Determine border color based on expiry status
     Color getBorderColor() {
       if (isExpired) return AppColors.expiredRed;
       if (isExpiringSoon) return AppColors.warningYellow;

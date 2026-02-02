@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// Input field for entering the validity period in days.
+/// 
+/// Accepts numeric input for the number of days a document is valid for.
 class ValidityDaysField extends StatelessWidget {
+  /// Controller for the days input field
   final TextEditingController controller;
+  
+  /// Callback when the value changes
   final Function(String) onChanged;
 
   const ValidityDaysField({
@@ -20,6 +26,7 @@ class ValidityDaysField extends StatelessWidget {
         hintText: '365',
         suffixText: 'days',
       ),
+      // Notify parent when value changes
       onChanged: onChanged,
     );
   }

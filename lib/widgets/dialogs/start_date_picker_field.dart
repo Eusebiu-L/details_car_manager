@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
+/// Input field for selecting a document's start date (valid from date).
+/// 
+/// Shows a read-only text field with a calendar picker button to select dates.
 class StartDatePickerField extends StatelessWidget {
+  /// Controller for the date text field
   final TextEditingController controller;
+  
+  /// Currently selected date
   final DateTime selectedDate;
+  
+  /// Callback when date is changed
   final Function(DateTime) onDateChanged;
 
   const StartDatePickerField({
@@ -19,6 +27,7 @@ class StartDatePickerField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: 'Start Date (Valid From)',
+        // Calendar icon button to open date picker
         suffixIcon: IconButton(
           icon: const Icon(Icons.calendar_today),
           onPressed: () async {
@@ -28,6 +37,7 @@ class StartDatePickerField extends StatelessWidget {
               firstDate: DateTime(2000),
               lastDate: DateTime(2100),
             );
+            // Update if user selected a date
             if (picked != null) {
               onDateChanged(picked);
             }
