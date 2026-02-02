@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../common/app_colors.dart';
-import '../../utils/date_utils.dart' as date_helper;
+import '../../utils/date_utils.dart';
+import '../../utils/expiry_status_helper.dart';
 
 /// Tile widget displaying a car document reminder with status indicator.
 /// 
@@ -23,27 +24,10 @@ class ReminderTile extends StatelessWidget {
     required this.icon,
   });
 
-  bool get isExpired => date_helper.DateTimeHelper.isExpired(expiryDate);
-  bool get isExpiringSoon => date_helper.DateTimeHelper.isExpiringSoon(expiryDate);
-
   @override
   Widget build(BuildContext context) {
-    // Determine background color based on expiry status
-    Color getBackgroundColor() {
-      if (isExpired) return AppColors.expiredRedBackground;
-      if (isExpiringSoon) return AppColors.warningYellowBackground;
-      return AppColors.validGreenBackground;
-    }
-
-    // Determine border color based on expiry status
-    Color getBorderColor() {
-      if (isExpired) return AppColors.expiredRed;
-      if (isExpiringSoon) return AppColors.warningYellow;
-      return AppColors.validGreen;
-    }
-
-    final backgroundColor = getBackgroundColor();
-    final borderColor = getBorderColor();
+    final backgroundColor = ExpiryStatusHelper.getStatusBackgroundColor(expiryDate);
+    final borderColor = ExpiryStatusHelper.getStatusColor(expiryDate);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
@@ -70,7 +54,7 @@ class ReminderTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Expiry: ${date_helper.DateTimeHelper.formatDate(expiryDate)}',
+                  'Expiry: ${DateTimeHelper.formatDate(expiryDate)}',
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.greyText,
@@ -82,13 +66,11 @@ class ReminderTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: isExpired
-                  ? AppColors.expiredRed
-                  : (isExpiringSoon ? AppColors.warningYellow : AppColors.validGreen),
+              color: borderColor,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
-              isExpired ? 'EXPIRED' : (isExpiringSoon ? 'WARNING' : 'VALID'),
+              ExpiryStatusHelper.getStatusLabel(expiryDate),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

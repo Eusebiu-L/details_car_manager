@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../common/app_colors.dart';
-import '../../utils/date_utils.dart' as date_helper;
+import '../../utils/date_utils.dart';
+import '../../utils/expiry_status_helper.dart';
 
 /// Compact summary item showing a document with its expiry date and status.
 /// 
@@ -25,18 +25,8 @@ class CarSummaryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Check document status
-    final isExpired = date_helper.DateTimeHelper.isExpired(date);
-    final isExpiringSoon = date_helper.DateTimeHelper.isExpiringSoon(date);
-
     // Determine color based on expiry status
-    Color getColor() {
-      if (isExpired) return AppColors.expiredRed;
-      if (isExpiringSoon) return AppColors.warningYellow;
-      return AppColors.validGreen;
-    }
-
-    final color = getColor();
+    final color = ExpiryStatusHelper.getStatusColor(date);
 
     return Column(
       children: [
@@ -52,7 +42,7 @@ class CarSummaryItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          date_helper.DateTimeHelper.formatDate(date),
+          DateTimeHelper.formatDate(date),
           style: TextStyle(
             fontSize: 10,
             color: color,

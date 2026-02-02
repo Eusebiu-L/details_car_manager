@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../utils/expiry_status_helper.dart';
+import '../utils/date_utils.dart';
+import '../common/app_colors.dart';
 
 class ReminderTile extends StatelessWidget {
   final String title;
@@ -12,31 +15,10 @@ class ReminderTile extends StatelessWidget {
     required this.icon,
   });
 
-  bool get isExpired {
-    return expiryDate.isBefore(DateTime.now());
-  }
-
-  bool get isExpiringSoon {
-    final now = DateTime.now();
-    return !isExpired && expiryDate.difference(now).inDays <= 7;
-  }
-
   @override
   Widget build(BuildContext context) {
-    Color getBackgroundColor() {
-      if (isExpired) return Colors.red[100]!;
-      if (isExpiringSoon) return Colors.yellow[100]!;
-      return Colors.green[100]!;
-    }
-
-    Color getBorderColor() {
-      if (isExpired) return Colors.red;
-      if (isExpiringSoon) return Colors.yellow[600]!;
-      return Colors.green;
-    }
-
-    final backgroundColor = getBackgroundColor();
-    final borderColor = getBorderColor();
+    final backgroundColor = ExpiryStatusHelper.getStatusBackgroundColor(expiryDate);
+    final borderColor = ExpiryStatusHelper.getStatusColor(expiryDate);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
@@ -63,10 +45,10 @@ class ReminderTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Expiry: ${expiryDate.day}/${expiryDate.month}/${expiryDate.year}',
+                  'Expiry: ${DateTimeHelper.formatDate(expiryDate)}',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[700],
+                    color: AppColors.greyText,
                   ),
                 ),
               ],
@@ -75,11 +57,11 @@ class ReminderTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: isExpired ? Colors.red : (isExpiringSoon ? Colors.yellow[600]! : Colors.green),
+              color: borderColor,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
-              isExpired ? 'EXPIRED' : (isExpiringSoon ? 'WARNING' : 'VALID'),
+              ExpiryStatusHelper.getStatusLabel(expiryDate),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
